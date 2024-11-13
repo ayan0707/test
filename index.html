@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单电商网站</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .background-image {
+            background-image: url('https://img.alicdn.com/imgextra/i4/1120870168/TB2tJUUgVXXXXaOXpXXXXXXXXXX-1120870168.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        .timer-box {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            text-align: center;
+        }
+        .timer {
+            display: inline-block;
+            padding: 1px 5px;
+            font: normal 36px Impact;
+            background: url(https://img.alicdn.com/imgextra/i1/1120870168/TB2mE3scFXXXXaUXXXXXXXXXXXX-1120870168.gif) center;
+            margin-right: 10px;
+        }
+        .message {
+            font-family: 微软雅黑;
+            font-size: 16px;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image">
+        <div class="timer-box">
+            <div class="countdown">
+                <span class="timer"><em class="ks-d">00</em>天</span>
+                <span class="timer"><em class="ks-h">00</em>时</span>
+                <span class="timer"><em class="ks-m">00</em>分</span>
+                <span class="timer"><em class="ks-s">00</em>秒</span>
+            </div>
+            <div class="message">
+                <span class="time-s">活动正在进行，提示：离活动已结束……还有</span>
+                <span class="time-e" style="display:none;">活动已结束……</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 这里可以添加倒计时的 JavaScript 实现
+        const endTime = new Date('2024-12-12 00:00:00').getTime(); // 更改这个时间
+        const timerDisplay = {
+            days: document.querySelector('.ks-d'),
+            hours: document.querySelector('.ks-h'),
+            minutes: document.querySelector('.ks-m'),
+            seconds: document.querySelector('.ks-s'),
+            timeEnding: document.querySelector('.time-e'),
+            timeRunning: document.querySelector('.time-s')
+        };
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = endTime - now;
+
+            if (distance < 0) {
+                timerDisplay.timeEnding.style.display = 'block';
+                timerDisplay.timeRunning.style.display = 'none';
+                clearInterval(timerInterval);
+                return;
+            }
+
+            // 计算时间组件
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            timerDisplay.days.innerHTML = String(days).padStart(2, '0');
+            timerDisplay.hours.innerHTML = String(hours).padStart(2, '0');
+            timerDisplay.minutes.innerHTML = String(minutes).padStart(2, '0');
+            timerDisplay.seconds.innerHTML = String(seconds).padStart(2, '0');
+        }
+
+        const timerInterval = setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
